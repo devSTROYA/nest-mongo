@@ -1,0 +1,57 @@
+{
+  "name": "nest-mongo",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/nest-mongo/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/nest-mongo",
+        "main": "apps/nest-mongo/src/main.ts",
+        "tsConfig": "apps/nest-mongo/tsconfig.app.json",
+        "assets": ["apps/nest-mongo/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/nest-mongo/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "nest-mongo:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "nest-mongo:build:development"
+        },
+        "production": {
+          "buildTarget": "nest-mongo:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/nest-mongo/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/nest-mongo/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
