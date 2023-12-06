@@ -28,6 +28,7 @@ export class UpdateJobUseCase implements UseCase<UpdateJobDTO, Promise<UpdateJob
     if (!jobId) return left(JobErrors.ParameterMissing.create(['jobId']));
     const findJob = await this.jobRepository.findById(jobId);
     if (!findJob) return left(JobErrors.JobNotFound.create(jobId));
+    if (findJob.status === 'completed') return left(JobErrors.JobAlreadyCompleted.create());
 
     await this.jobRepository.update(jobId, {
       ...findJob,

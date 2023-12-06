@@ -30,4 +30,14 @@ export namespace JobErrors {
       return new JobNotFound(`Job Id ${id} not found`);
     }
   }
+
+  export class JobAlreadyCompleted extends UseCaseError {
+    private constructor(message: string) {
+      super(message)
+    }
+
+    static create() {
+      return new JobAlreadyCompleted(undefined);
+    }
+  }
 }
